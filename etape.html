@@ -1,60 +1,71 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Étape</title>
-<link rel="stylesheet" href="style.css" />
-<script src="https://unpkg.com/html5-qrcode"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Étape</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
-<div class="container">
-<h2 id="question"></h2>
-<p class="info">🔍 Trouve et scanne le QR de la bonne réponse.</p>
-<button class="btn" id="scanBtn">📷 Ouvrir le scanner</button>
-<div id="qr-reader" style="width:100%; margin-top:1rem;"></div>
-</div>
+  <div class="container">
+    <h2 id="question"></h2>
+    <p class="info">🔍 Trouve et scanne le QR de la bonne réponse.</p>
+    <button class="btn" id="scanBtn">📷 Ouvrir le scanner</button>
+    <div id="qr-reader" style="width:100%; margin-top:1rem;"></div>
+    <audio id="musique" autoplay loop></audio>
+  </div>
 
+  <script src="data.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const id = parseInt(params.get("id"), 10);
+      const etapeMax = parseInt(localStorage.getItem("etape_max") || "1", 10);
+      const questionEl = document.getElementById("question");
+      const body = document.body;
+      const musiqueEl = document.getElementById("musique");
 
-<script src="data.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-const params = new URLSearchParams(window.location.search);
-const id = parseInt(params.get("id"), 10);
-const etapeMax = parseInt(localStorage.getItem("etape_max") || "1", 10);
-const questionEl = document.getElementById("question");
+      if (!etapes[id]) {
+        questionEl.textContent = "Étape inconnue";
+      } else if (id > etapeMax) {
+        document.body.innerHTML = `
+          <div class="container">
+            <h2>⛔ Accès refusé</h2>
+            <p>Tu dois résoudre les étapes précédentes.</p>
+          </div>`;
+      } else {
+        questionEl.textContent = `Étape ${id} – ${etapes[id].question}`;
 
+        // Appliquer image de fond
+        if(etapes[id].background) {
+          body.style.backgroundImage = `url('${etapes[id].background}')`;
+          body.style.backgroundSize = "cover";
+          body.style.backgroundPosition = "center";
+          body.style.backgroundRepeat = "no-repeat";
+        }
 
-if (!etapes[id]) {
-questionEl.textContent = "Étape inconnue";
-} else if (id > etapeMax) {
-document.body.innerHTML = `
-<div class="container">
-<h2>⛔ Accès refusé</h2>
-<p>Tu dois résoudre les étapes précédentes.</p>
-</div>`;
-} else {
-questionEl.textContent = `Étape ${id} – ${etapes[id].question}`;
-}
+        // Lancer musique
+        if(etapes[id].music) {
+          musiqueEl.src = etapes[id].music;
+          musiqueEl.play().catch(err => console.log("Impossible de jouer la musique automatiquement :", err));
+        }
+      }
 
-
-const scanBtn = document.getElementById("scanBtn");
-scanBtn.addEventListener("click", () => {
-const html5QrCode = new Html5Qrcode("qr-reader");
-html5QrCode.start(
-{ facingMode: "environment" },
-{ fps: 10, qrbox: 250 },
-(decodedText, decodedResult) => {
-// Redirection automatique vers l'URL du QR scanné
-window.location.href = decodedText;
-html5QrCode.stop();
-},
-(errorMessage) => {
-// Ignorer les erreurs de lecture
-}
-).catch(err => console.error(err));
-});
-});
-</script>
+      const scanBtn = document.getElementById("scanBtn");
+      scanBtn.addEventListener("click", () => {
+        const html5QrCode = new Html5Qrcode("qr-reader");
+        html5QrCode.start(
+          { facingMode: "environment" },
+          { fps: 10, qrbox: 250 },
+          (decodedText, decodedResult) => {
+            window.location.href = decodedText;
+            html5QrCode.stop();
+          },
+          (errorMessage) => {}
+        ).catch(err => console.error(err));
+      });
+    });
+  </script>
 </body>
 </html>
