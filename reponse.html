@@ -1,71 +1,63 @@
-<!-- ================== reponse.html ================== -->
+!-- ================== reponse.html ================== -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Validation stricte</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réponse - Jeu de piste</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-<h2 id="resultat"></h2>
-<p id="message"></p>
-<a id="btnSuivante" class="btn" href="#" style="display:none;">Étape suivante</a>
-<button id="retourBtn" class="btn" style="display:none;">🔙 Retour à l'étape</button>
-</div>
+  <div class="container">
+    <h2 id="resultat"></h2>
+    <p id="message"></p>
+    <a id="btnSuivante" class="btn" href="#" style="display:none;">Étape suivante</a>
+    <button id="retourBtn" class="btn" style="display:none;">🔙 Retour à l'étape</button>
+  </div>
 
+  <script src="data.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const etapeId = parseInt(params.get("etape"), 10);
+      const rep = params.get("rep");
+      let etapeMax = parseInt(localStorage.getItem("etape_max") || "1", 10);
 
-<script src="data.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-const params = new URLSearchParams(window.location.search);
-const etapeId = parseInt(params.get("etape"), 10);
-const token = params.get("token");
+      const resultat = document.getElementById("resultat");
+      const message = document.getElementById("message");
+      const btnSuivante = document.getElementById("btnSuivante");
+      const retourBtn = document.getElementById("retourBtn");
 
+      retourBtn.addEventListener("click", () => {
+        window.history.back();
+      });
 
-let etapeMax = parseInt(localStorage.getItem("etape_max") || "1", 10);
-
-
-const resultat = document.getElementById("resultat");
-const message = document.getElementById("message");
-const btnSuivante = document.getElementById("btnSuivante");
-const retourBtn = document.getElementById("retourBtn");
-
-
-retourBtn.addEventListener("click", () => {
-window.history.back();
-});
-
-
-// Vérification stricte : l'étape doit être exactement l'étape actuelle
-if (!etapes[etapeId]) {
-resultat.innerText = "⛔ Étape inconnue";
-message.innerText = "Cette étape n'existe pas.";
-retourBtn.style.display = "inline-block";
-} else if (etapeId !== etapeMax) {
-resultat.innerText = "⛔ QR non valide";
-message.innerText = `Tu dois résoudre l'étape ${etapeMax} avant.`;
-retourBtn.style.display = "inline-block";
-} else if (token !== etapes[etapeId].token) {
-resultat.innerText = "⛔ QR non valide";
-message.innerText = "Ce QR ne correspond pas à la bonne étape.";
-retourBtn.style.display = "inline-block";
-} else {
-// Bonne réponse pour l'étape actuelle
-if (etapes[etapeId].suivante) {
-etapeMax = etapes[etapeId].suivante;
-localStorage.setItem("etape_max", etapeMax.toString());
-resultat.innerText = "✅ Bonne réponse !";
-message.innerText = "Tu peux passer à l'étape suivante.";
-btnSuivante.href = `etape.html?id=${etapeMax}`;
-btnSuivante.style.display = "inline-block";
-} else {
-resultat.innerText = "🎉 Félicitations !";
-message.innerText = "Tu as terminé le jeu.";
-}
-}
-});
-</script>
+      if (!etapes[etapeId]) {
+        resultat.innerText = "⛔ Étape inconnue";
+        message.innerText = "Cette étape n'existe pas.";
+        retourBtn.style.display = "inline-block";
+      } else if (etapeId !== etapeMax) {
+        resultat.innerText = "⛔ QR non valide";
+        message.innerText = `Tu dois résoudre l'étape ${etapeMax} avant.`;
+        retourBtn.style.display = "inline-block";
+      } else if (rep === etapes[etapeId].reponse) {
+        if (etapes[etapeId].suivante) {
+          etapeMax = etapes[etapeId].suivante;
+          localStorage.setItem("etape_max", etapeMax.toString());
+          resultat.innerText = "✅ Bonne réponse !";
+          message.innerText = "Tu peux passer à l'étape suivante.";
+          btnSuivante.href = `etape.html?id=${etapeMax}`;
+          btnSuivante.style.display = "inline-block";
+        } else {
+          resultat.innerText = "🎉 Félicitations !";
+          message.innerText = "Tu as terminé le jeu.";
+        }
+      } else {
+        resultat.innerText = "❌ Mauvaise réponse";
+        message.innerText = "Ce n’est pas le bon QR code.";
+        retourBtn.style.display = "inline-block";
+      }
+    });
+  </script>
 </body>
 </html>
