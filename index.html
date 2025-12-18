@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accueil - Jeu de piste</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accueil - Jeu de piste</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Bienvenue au Jeu de piste !</h1>
-    <button class="btn" id="startBtn">▶️ Démarrer le jeu</button>
-    <audio id="musique" loop></audio>
-  </div>
+<div class="container">
+<h1>Bienvenue au Jeu de piste !</h1>
+<button class="btn" id="startBtn">▶️ Démarrer le jeu</button>
+<audio id="musique" loop></audio>
+</div>
 
-  <script>
-    // 🔹 Réinitialiser le jeu à chaque ouverture de la page
-    localStorage.removeItem("etape_max");
-    localStorage.setItem("musiqueDemarree", "false");
 
-    const startBtn = document.getElementById("startBtn");
-    const musiqueEl = document.getElementById("musique");
+<script>
+// 🔹 Réinitialiser la progression à chaque ouverture
+localStorage.removeItem("etape_max");
+localStorage.setItem("musiqueDemarree", "false");
 
-    // Musique de l'accueil
-    musiqueEl.src = "audio/musique_accueil.mp3";
 
-    startBtn.addEventListener("click", () => {
-      musiqueEl.play().catch(err => console.log("Impossible de jouer la musique :", err));
-      localStorage.setItem("musiqueDemarree", "true"); // indique que la musique a été lancée
-      window.location.href = "etape.html?id=1"; // première étape
-    });
-  </script>
+const startBtn = document.getElementById("startBtn");
+const musiqueEl = document.getElementById("musique");
+
+
+// Musique de l'accueil
+musiqueEl.src = "audio/musique_accueil.mp3";
+
+
+startBtn.addEventListener("click", () => {
+musiqueEl.play().catch(err => console.log("Impossible de jouer la musique :", err));
+localStorage.setItem("musiqueDemarree", "true");
+window.location.href = "etape.html?id=1";
+});
+</script>
 </body>
 </html>

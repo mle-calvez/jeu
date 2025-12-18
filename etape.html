@@ -1,96 +1,99 @@
-
-
-<!-- etape.html -->
+!-- ================== etape.html ================== -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Étape</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://unpkg.com/html5-qrcode"></script>
-  <style>
-    body {
-      min-height: 100vh;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      margin: 0;
-      font-family: sans-serif;
-    }
-    .container {
-      background: rgba(255, 255, 255, 0.8);
-      padding: 20px;
-      margin: 20px;
-      border-radius: 10px;
-      text-align: center;
-    }
-    .btn {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      margin: 10px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Étape</title>
+<link rel="stylesheet" href="style.css" />
+<script src="https://unpkg.com/html5-qrcode"></script>
+<style>
+body {
+min-height: 100vh;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+margin: 0;
+font-family: sans-serif;
+}
+.container {
+background: rgba(255, 255, 255, 0.8);
+padding: 20px;
+margin: 20px;
+border-radius: 10px;
+text-align: center;
+}
+.btn {
+padding: 10px 20px;
+font-size: 16px;
+cursor: pointer;
+margin: 10px;
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h2 id="question"></h2>
-    <p class="info">🔍 Trouve et scanne le QR de la bonne réponse.</p>
-    <button class="btn" id="scanBtn">📷 Scanner le QR</button>
-    <div id="qr-reader" style="width:100%; margin-top:1rem;"></div>
-    <audio id="musique" loop></audio>
-  </div>
+<div class="container">
+<h2 id="question"></h2>
+<p class="info">🔍 Trouve et scanne le QR de la bonne réponse.</p>
+<button class="btn" id="scanBtn">📷 Scanner le QR</button>
+<div id="qr-reader" style="width:100%; margin-top:1rem;"></div>
+<audio id="musique" loop></audio>
+</div>
+<script src="data.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+const params = new URLSearchParams(window.location.search);
+const id = parseInt(params.get("id"), 10);
+const etapeMax = parseInt(localStorage.getItem("etape_max") || "1", 10);
 
-  <script src="data.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const params = new URLSearchParams(window.location.search);
-      const id = parseInt(params.get("id"), 10);
-      const etapeMax = parseInt(localStorage.getItem("etape_max") || "1", 10);
-      const questionEl = document.getElementById("question");
-      const body = document.body;
-      const musiqueEl = document.getElementById("musique");
-      const scanBtn = document.getElementById("scanBtn");
 
-      if (!etapes[id]) {
-        questionEl.textContent = "Étape inconnue";
-      } else if (id > etapeMax) {
-        document.body.innerHTML = `
-          <div class="container">
-            <h2>⛔ Accès refusé</h2>
-            <p>Tu dois résoudre les étapes précédentes.</p>
-          </div>`;
-      } else {
-        const etape = etapes[id];
-        questionEl.textContent = `Étape ${id} – ${etape.question}`;
+const questionEl = document.getElementById("question");
+const body = document.body;
+const musiqueEl = document.getElementById("musique");
+const scanBtn = document.getElementById("scanBtn");
 
-        // Fond d'écran
-        if(etape.background) {
-          body.style.backgroundImage = `url('${etape.background}')`;
-        }
 
-        // Lancer musique si déjà démarrée depuis l'accueil
-        if(localStorage.getItem("musiqueDemarree") === "true" && etape.music) {
-          musiqueEl.src = etape.music;
-          musiqueEl.play().catch(err => console.log("Lecture musique sur étape :", err));
-        }
+if (!etapes[id]) {
+questionEl.textContent = "Étape inconnue";
+} else if (id > etapeMax) {
+document.body.innerHTML = `
+<div class="container">
+<h2>⛔ Accès refusé</h2>
+<p>Tu dois résoudre les étapes précédentes.</p>
+</div>`;
+} else {
+const etape = etapes[id];
+questionEl.textContent = `Étape ${id} – ${etape.question}`;
 
-        // Bouton Scanner QR
-        scanBtn.addEventListener("click", () => {
-          const html5QrCode = new Html5Qrcode("qr-reader");
-          html5QrCode.start(
-            { facingMode: "environment" },
-            { fps: 10, qrbox: 250 },
-            (decodedText, decodedResult) => {
-              window.location.href = decodedText;
-              html5QrCode.stop();
-            },
-            (errorMessage) => {}
-          ).catch(err => console.error(err));
-        });
-      }
-    });
-  </script>
+
+// Fond d'écran
+if(etape.background) {
+body.style.backgroundImage = `url('${etape.background}')`;
+}
+
+
+// Lancer musique si démarrée depuis accueil
+if(localStorage.getItem("musiqueDemarree") === "true" && etape.music) {
+musiqueEl.src = etape.music;
+musiqueEl.play().catch(err => console.log("Lecture musique sur étape :", err));
+}
+
+
+// Scanner QR
+scanBtn.addEventListener("click", () => {
+const html5QrCode = new Html5Qrcode("qr-reader");
+html5QrCode.start(
+{ facingMode: "environment" },
+{ fps: 10, qrbox: 250 },
+(decodedText) => {
+window.location.href = decodedText;
+html5QrCode.stop();
+},
+() => {}
+).catch(err => console.error(err));
+});
+}
+});
+</script>
 </body>
 </html>
