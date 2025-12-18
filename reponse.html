@@ -1,3 +1,4 @@
+<!-- ================== reponse.html ================== -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -17,10 +18,12 @@
   <script src="data.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const params = new URLSearchParams(window.location.search);
-      const etapeId = parseInt(params.get("etape"), 10);
-      const rep = params.get("rep");
+      // Étape actuelle depuis localStorage
       let etapeMax = parseInt(localStorage.getItem("etape_max") || "1", 10);
+
+      // Réponse scannée depuis le QR code
+      const params = new URLSearchParams(window.location.search);
+      const rep = params.get("rep");
 
       const resultat = document.getElementById("resultat");
       const message = document.getElementById("message");
@@ -31,17 +34,16 @@
         window.history.back();
       });
 
-      if (!etapes[etapeId]) {
+      const etape = etapes[etapeMax];
+
+      if (!etape) {
         resultat.innerText = "⛔ Étape inconnue";
         message.innerText = "Cette étape n'existe pas.";
         retourBtn.style.display = "inline-block";
-      } else if (etapeId !== etapeMax) {
-        resultat.innerText = "⛔ QR non valide";
-        message.innerText = `Tu dois résoudre l'étape ${etapeMax} avant.`;
-        retourBtn.style.display = "inline-block";
-      } else if (rep === etapes[etapeId].reponse) {
-        if (etapes[etapeId].suivante) {
-          etapeMax = etapes[etapeId].suivante;
+      } else if (rep === etape.reponse) {
+        // Bonne réponse pour l'étape actuelle
+        if (etape.suivante) {
+          etapeMax = etape.suivante;
           localStorage.setItem("etape_max", etapeMax.toString());
           resultat.innerText = "✅ Bonne réponse !";
           message.innerText = "Tu peux passer à l'étape suivante.";
@@ -52,8 +54,9 @@
           message.innerText = "Tu as terminé le jeu.";
         }
       } else {
+        // Mauvaise réponse
         resultat.innerText = "❌ Mauvaise réponse";
-        message.innerText = "Ce n’est pas le bon QR code.";
+        message.innerText = "Ce n’est pas le bon QR code pour cette étape.";
         retourBtn.style.display = "inline-block";
       }
     });
