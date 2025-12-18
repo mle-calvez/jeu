@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bonne réponse sécurisée</title>
+  <title>Validation stricte</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,7 +21,7 @@
       const etapeId = parseInt(params.get("etape"), 10);
       const token = params.get("token");
 
-      const etapeMax = parseInt(localStorage.getItem("etape_max") || "1", 10);
+      let etapeMax = parseInt(localStorage.getItem("etape_max") || "1", 10);
 
       const resultat = document.getElementById("resultat");
       const message = document.getElementById("message");
@@ -32,26 +32,27 @@
         window.history.back();
       });
 
-      // Vérification stricte : étape actuelle et token QR
+      // Vérification stricte : étape scannée doit correspondre à l'étape actuelle
       if (!etapes[etapeId]) {
         resultat.innerText = "⛔ Étape inconnue";
         message.innerText = "Cette étape n'existe pas.";
         retourBtn.style.display = "inline-block";
       } else if (etapeId !== etapeMax) {
         resultat.innerText = "⛔ QR non valide";
-        message.innerText = "Tu dois résoudre les étapes dans l'ordre.";
+        message.innerText = `Tu dois résoudre l'étape ${etapeMax} avant.`;
         retourBtn.style.display = "inline-block";
       } else if (token !== etapes[etapeId].token) {
         resultat.innerText = "⛔ QR non valide";
         message.innerText = "Ce QR ne correspond pas à la bonne étape.";
         retourBtn.style.display = "inline-block";
       } else {
-        // Bonne réponse
+        // Bonne réponse pour l'étape actuelle
         if (etapes[etapeId].suivante) {
-          localStorage.setItem("etape_max", etapes[etapeId].suivante.toString());
+          etapeMax = etapes[etapeId].suivante;
+          localStorage.setItem("etape_max", etapeMax.toString());
           resultat.innerText = "✅ Bonne réponse !";
           message.innerText = "Tu peux passer à l'étape suivante.";
-          btnSuivante.href = `etape.html?id=${etapes[etapeId].suivante}`;
+          btnSuivante.href = `etape.html?id=${etapeMax}`;
           btnSuivante.style.display = "inline-block";
         } else {
           resultat.innerText = "🎉 Félicitations !";
