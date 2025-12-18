@@ -1,3 +1,6 @@
+
+
+<!-- etape.html -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,14 +9,37 @@
   <title>Étape</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://unpkg.com/html5-qrcode"></script>
+  <style>
+    body {
+      min-height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin: 0;
+      font-family: sans-serif;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      margin: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h2 id="question"></h2>
     <p class="info">🔍 Trouve et scanne le QR de la bonne réponse.</p>
-    <button class="btn" id="scanBtn">📷 Ouvrir le scanner</button>
+    <button class="btn" id="scanBtn">📷 Scanner le QR</button>
     <div id="qr-reader" style="width:100%; margin-top:1rem;"></div>
-    <audio id="musique" autoplay loop></audio>
+    <audio id="musique" loop></audio>
   </div>
 
   <script src="data.js"></script>
@@ -25,6 +51,7 @@
       const questionEl = document.getElementById("question");
       const body = document.body;
       const musiqueEl = document.getElementById("musique");
+      const scanBtn = document.getElementById("scanBtn");
 
       if (!etapes[id]) {
         questionEl.textContent = "Étape inconnue";
@@ -35,36 +62,34 @@
             <p>Tu dois résoudre les étapes précédentes.</p>
           </div>`;
       } else {
-        questionEl.textContent = `Étape ${id} – ${etapes[id].question}`;
+        const etape = etapes[id];
+        questionEl.textContent = `Étape ${id} – ${etape.question}`;
 
-        // Appliquer image de fond
-        if(etapes[id].background) {
-          body.style.backgroundImage = `url('${etapes[id].background}')`;
-          body.style.backgroundSize = "cover";
-          body.style.backgroundPosition = "center";
-          body.style.backgroundRepeat = "no-repeat";
+        // Fond d'écran
+        if(etape.background) {
+          body.style.backgroundImage = `url('${etape.background}')`;
         }
 
-        // Lancer musique
-        if(etapes[id].music) {
-          musiqueEl.src = etapes[id].music;
-          musiqueEl.play().catch(err => console.log("Impossible de jouer la musique automatiquement :", err));
+        // Lancer musique si déjà démarrée depuis l'accueil
+        if(localStorage.getItem("musiqueDemarree") === "true" && etape.music) {
+          musiqueEl.src = etape.music;
+          musiqueEl.play().catch(err => console.log("Lecture musique sur étape :", err));
         }
+
+        // Bouton Scanner QR
+        scanBtn.addEventListener("click", () => {
+          const html5QrCode = new Html5Qrcode("qr-reader");
+          html5QrCode.start(
+            { facingMode: "environment" },
+            { fps: 10, qrbox: 250 },
+            (decodedText, decodedResult) => {
+              window.location.href = decodedText;
+              html5QrCode.stop();
+            },
+            (errorMessage) => {}
+          ).catch(err => console.error(err));
+        });
       }
-
-      const scanBtn = document.getElementById("scanBtn");
-      scanBtn.addEventListener("click", () => {
-        const html5QrCode = new Html5Qrcode("qr-reader");
-        html5QrCode.start(
-          { facingMode: "environment" },
-          { fps: 10, qrbox: 250 },
-          (decodedText, decodedResult) => {
-            window.location.href = decodedText;
-            html5QrCode.stop();
-          },
-          (errorMessage) => {}
-        ).catch(err => console.error(err));
-      });
     });
   </script>
 </body>

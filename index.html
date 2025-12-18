@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Jeu de piste</title>
-<link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accueil - Jeu de piste</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
-<h1>🧭 Jeu de piste</h1>
-<p>Scanne le premier QR code pour commencer.</p>
-<button class="btn" onclick="demarrer()">Démarrer</button>
+<h1>Bienvenue au Jeu de piste !</h1>
+<button class="btn" id="startBtn">▶️ Démarrer le jeu</button>
+<audio id="musique" loop></audio>
 </div>
 
 
 <script>
-function demarrer() {
-localStorage.setItem("etape_max", "1");
-window.location.href = "etape.html?id=1";
-}
+const startBtn = document.getElementById("startBtn");
+const musiqueEl = document.getElementById("musique");
+
+
+// Musique de l'accueil
+musiqueEl.src = "audio/musique_accueil.mp3";
+
+
+startBtn.addEventListener("click", () => {
+musiqueEl.play().catch(err => console.log("Impossible de jouer la musique :", err));
+localStorage.setItem("musiqueDemarree", "true"); // marque que la musique a été lancée
+window.location.href = "etape.html?id=1"; // première étape
+});
 </script>
 </body>
 </html>
