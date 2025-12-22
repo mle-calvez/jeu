@@ -38,24 +38,24 @@
 
       if (!etape) {
         resultat.innerText = "⛔ Étape inconnue";
-        message.innerText = "Cette étape n'existe pas.";
+         resultat.innerHtml = "Cette étape n'existe pas.";
         retourBtn.style.display = "inline-block";
       } else if (rep === etape.reponse) {
         // Bonne réponse pour l'étape actuelle
         if (etape.suivante) {
           etapeMax = etape.suivante;
           localStorage.setItem("etape_max", etapeMax.toString());
-          resultat.innerText = "✅ "+etape.message;
+          resultat.innerHtml = "✅ "+etape.message;
           btnSuivante.href = `etape.html?id=${etapeMax}`;
           btnSuivante.style.display = "inline-block";
         } else {
           resultat.innerText = "🎉 Félicitations !";
-          message.innerText = "Tu as terminé le jeu.";
+           resultat.innerHtml = "Tu as terminé le jeu.";
         }
       } else {
         // Mauvaise réponse
         resultat.innerText = "❌ Mauvaise réponse";
-        message.innerText = "Ce n’est pas le bon QR code pour cette étape.";
+        resultat.innerHtml = "Ce n’est pas le bon QR code pour cette étape.";
         retourBtn.style.display = "inline-block";
       }
     });

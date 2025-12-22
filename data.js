@@ -53,4 +53,40 @@ const etapes = {
     suivante: 7,
     message: "Bon, apparemment, tu as déjà une réservation, tu peux en découvrir le détail <a href=\'https://www.airbnb.fr/rooms/33961269?guests=1&adults=1&s=67&unique_share_id=e5880008-6f52-4970-a1ca-3562ebc57f39\'>ici</a> "
   },
+  7: {
+    question: "Où dormir ?",
+    explication: "Ton pucier le sait ...",
+    reponse: "7",
+    background: "images/etape7.jpg",
+    music: "audio/etape7.mp3",
+    suivante: 8,
+    message: "Bon, apparemment, tu as déjà une réservation, tu peux en découvrir le détail <a href=\'https://www.airbnb.fr/rooms/33961269?guests=1&adults=1&s=67&unique_share_id=e5880008-6f52-4970-a1ca-3562ebc57f39\'>ici</a> "
+  },
+  8: {
+    question: "Où dormir ?",
+    explication: "Ton pucier le sait ...",
+    reponse: "8",
+    background: "images/etape8.jpg",
+    music: "audio/etape8.mp3",
+    suivante: 9,
+    message: "Bon, apparemment, tu as déjà une réservation, tu peux en découvrir le détail <a href=\'https://www.airbnb.fr/rooms/33961269?guests=1&adults=1&s=67&unique_share_id=e5880008-6f52-4970-a1ca-3562ebc57f39\'>ici</a> "
+  },
+  9: {
+    question: "Où dormir ?",
+    explication: "Ton pucier le sait ...",
+    reponse: "9",
+    background: "images/etape9.jpg",
+    music: "audio/etape9.mp3",
+    suivante: 10,
+    message: "Bon, apparemment, tu as déjà une réservation, tu peux en découvrir le détail <a href=\'https://www.airbnb.fr/rooms/33961269?guests=1&adults=1&s=67&unique_share_id=e5880008-6f52-4970-a1ca-3562ebc57f39\'>ici</a> "
+  },
+  10: {
+    question: "Où dormir ?",
+    explication: "Ton pucier le sait ...",
+    reponse: "10",
+    background: "images/etape10.jpg",
+    music: "audio/etape10.mp3",
+    suivante: null,
+    message: "Bon, apparemment, tu as déjà une réservation, tu peux en découvrir le détail <a href=\'https://www.airbnb.fr/rooms/33961269?guests=1&adults=1&s=67&unique_share_id=e5880008-6f52-4970-a1ca-3562ebc57f39\'>ici</a> "
+  },
 };
