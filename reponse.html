@@ -38,7 +38,7 @@
 
       if (!etape) {
         resultat.innerText = "⛔ Étape inconnue";
-         resultat.innerHtml = "Cette étape n'existe pas.";
+        message.innerText = "Cette étape n'existe pas.";
         retourBtn.style.display = "inline-block";
       } else if (rep === etape.reponse) {
         // Bonne réponse pour l'étape actuelle
@@ -49,8 +49,8 @@
           btnSuivante.href = `etape.html?id=${etapeMax}`;
           btnSuivante.style.display = "inline-block";
         } else {
-          resultat.innerText = "🎉 Félicitations !";
-           resultat.innerHtml = "Tu as terminé le jeu.";
+          resultat.innerHtml = "🎉 Félicitations !";
+          message.innerText = "Tu as terminé le jeu.";
         }
       } else {
         // Mauvaise réponse
