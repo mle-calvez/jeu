@@ -12,7 +12,7 @@
   </style>
 </head>
 <body>
-  <h1>Générateur de QR codes pour le jeu de piste</h1>
+  <h1>Générateur de QR codes pour le jeu</h1>
   <div id="qrs"></div>
 
   <script src="data.js"></script>
@@ -26,7 +26,7 @@
       const div = document.createElement('div');
       div.className = 'qr';
       const title = document.createElement('h3');
-      title.textContent = `Étape ${id} – Réponse: ${etapes[id].reponse}`;
+      title.textContent = `Étape ${id}`;
       div.appendChild(title);
 
       const canvas = document.createElement('canvas');

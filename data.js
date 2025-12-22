@@ -9,20 +9,48 @@ const etapes = {
     message: "Ok, tu as la casquette !"
   },
   2: {
-    question: "Ok, tu as la casquette !",
-    explication: "Pour voyager il faut être équipé de la tête aux pieds ... mais il faut bien commencer par une extrémité !",
+    question: "Les préparatifs (suite)",
+    explication: "Bon, la casquette c'est bien, mais s'il fait froid ?",
     reponse: "2",
     background: "images/etape2.jpg",
     music: "audio/etape2.mp3",
     suivante: 3,
-    message: "Bien joué ! Le dragon est bien rouge !"
+    message: "Te voilà bien réchauffé ! Merci Mamie Any"
   },
   3: {
-    question: "Combien de clés y a-t-il ?",
+    question: "Les préparatifs (fin)",
+    explication: "Partir les poches vides, est-bien raisonnable ?",
     reponse: "3",
     background: "images/etape3.jpg",
     music: "audio/etape3.mp3",
     suivante: null,
-    message: "Félicitations ! Tu as trouvé toutes les clés !"
-  }
+    message: "Mamie Any a tout prévu, un peu d'argent de poche pour subsister ! Bon cette fois, je pense que tu es prêt à voyager !"
+  },
+  4: {
+    question: "La destination",
+    explication: "Tu la trouveras dans le réceptacle de ceux qui ont chanté Cougnes.",
+    reponse: "4",
+    background: "images/etape4.jpg",
+    music: "audio/etape4.mp3",
+    suivante: null,
+    message: "Eh oui, ta destination est La Rochelle !"
+  },
+  5: {
+    question: "Quand ?",
+    explication: "Pour le savoir, tu devras additionner Saint Benoît et Saint Henri pour trouver où chercher dans le guide sur l'électricité pour jeune bien cortiqué !",
+    reponse: "5",
+    background: "images/etape6jpg",
+    music: "audio/etape5.mp3",
+    suivante: null,
+    message: "Effectivement, tu partiras du 11 au 13 juillet ! Bon le manteau sera peut-être un peu chaud ...^^"
+  },
+  6: {
+    question: "Où dormir ?",
+    explication: "Ton pucier le sait ...",
+    reponse: "6",
+    background: "images/etape6.jpg",
+    music: "audio/etape6.mp3",
+    suivante: null,
+    message: "Bon, apparemment, tu as déjà une réservation, tu peux en découvrir le détail <a href=\'https://www.airbnb.fr/rooms/33961269?guests=1&adults=1&s=67&unique_share_id=e5880008-6f52-4970-a1ca-3562ebc57f39\'>ici</a> "
+  },
 };
