@@ -60,7 +60,7 @@ const etapes = {
     background: "images/etape7.jpg",
     music: "audio/etape7.mp3",
     suivante: 8,
-    message: ""
+    message: "Ah les fameux Burgers du Captain's café on en redemande !!!"
   },
   8: {
     question: "Que faire le soir à la Rochelle ?",
