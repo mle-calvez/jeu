@@ -10,7 +10,7 @@ const etapes = {
   },
   2: {
     question: "Les préparatifs (suite)",
-    explication: "Bon, la casquette c'est bien, mais s'il fait froid ?",
+    explication: "Bon, la casquette c'est bien, mais s'il fait froid ? Si seulement il y avait un dressing ...",
     reponse: "2",
     background: "images/etape2.jpg",
     music: "audio/etape2.mp3",
@@ -51,42 +51,42 @@ const etapes = {
     background: "images/etape6.jpg",
     music: "audio/etape6.mp3",
     suivante: 7,
-    message: "Bon, apparemment, tu as déjà une réservation, tu peux en découvrir le détail <a href=\'https://www.airbnb.fr/rooms/33961269?guests=1&adults=1&s=67&unique_share_id=e5880008-6f52-4970-a1ca-3562ebc57f39\'>ici</a> "
+    message: "Bon, apparemment, tu as déjà une réservation, tu peux en découvrir le détail <a target=\'_blank\' href=\'https://www.airbnb.fr/rooms/33961269?guests=1&adults=1&s=67&unique_share_id=e5880008-6f52-4970-a1ca-3562ebc57f39\'>ici</a> "
   },
   7: {
-    question: "Où dormir ?",
-    explication: "Ton pucier le sait ...",
+    question: "Où manger ?",
+    explication: "Puise dans tes souvenirs, et trouve le code suivant dans l'ingrédient principal !",
     reponse: "7",
     background: "images/etape7.jpg",
     music: "audio/etape7.mp3",
     suivante: 8,
-    message: "Bon, apparemment, tu as déjà une réservation, tu peux en découvrir le détail <a href=\'https://www.airbnb.fr/rooms/33961269?guests=1&adults=1&s=67&unique_share_id=e5880008-6f52-4970-a1ca-3562ebc57f39\'>ici</a> "
+    message: ""
   },
   8: {
-    question: "Où dormir ?",
-    explication: "Ton pucier le sait ...",
+    question: "Que faire le soir à la Rochelle ?",
+    explication: "Clovis - Flotte - égarements psychiques : Donne la réponse à l'Ours !",
     reponse: "8",
     background: "images/etape8.jpg",
     music: "audio/etape8.mp3",
     suivante: 9,
-    message: "Bon, apparemment, tu as déjà une réservation, tu peux en découvrir le détail <a href=\'https://www.airbnb.fr/rooms/33961269?guests=1&adults=1&s=67&unique_share_id=e5880008-6f52-4970-a1ca-3562ebc57f39\'>ici</a> "
+    message: "Les Francofolies de la Rochelle, pas mal comme destination !"
   },
   9: {
-    question: "Où dormir ?",
-    explication: "Ton pucier le sait ...",
+    question: "Pour voir qui ?",
+    explication: "tu le sauras en parcourant son oeuvre :)",
     reponse: "9",
     background: "images/etape9.jpg",
     music: "audio/etape9.mp3",
     suivante: 10,
-    message: "Bon, apparemment, tu as déjà une réservation, tu peux en découvrir le détail <a href=\'https://www.airbnb.fr/rooms/33961269?guests=1&adults=1&s=67&unique_share_id=e5880008-6f52-4970-a1ca-3562ebc57f39\'>ici</a> "
+    message: "Gael Faye !!! Enfin de retour sur scène !"
   },
   10: {
-    question: "Où dormir ?",
-    explication: "Ton pucier le sait ...",
+    question: "Mais bon c'est un festival, alors qui pour l'accompagner ?",
+    explication: "Sa voix en sort souvent ...",
     reponse: "10",
     background: "images/etape10.jpg",
     music: "audio/etape10.mp3",
     suivante: null,
-    message: "Bon, apparemment, tu as déjà une réservation, tu peux en découvrir le détail <a href=\'https://www.airbnb.fr/rooms/33961269?guests=1&adults=1&s=67&unique_share_id=e5880008-6f52-4970-a1ca-3562ebc57f39\'>ici</a> "
-  },
+    message: "Orelsan Et Gaël Faye sur la scène des Francofolies le 12 juillet, on y sera ! Joyeux Nowel !"
+  }
 };

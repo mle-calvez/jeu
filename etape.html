@@ -44,13 +44,11 @@
         explicationEl.innerHTML = `${etape.explication}`;
 
 
-        if(etape.background) {
-          body.style.backgroundImage = `url('${etape.background}')`;
-        }
+  
 
         if(localStorage.getItem("musiqueDemarree") === "true" && etape.music) {
           musiqueEl.src = etape.music;
-         // musiqueEl.play().catch(err => console.log("Lecture musique sur étape :", err));
+          musiqueEl.play().catch(err => console.log("Lecture musique sur étape :", err));
         }
 
         scanBtn.addEventListener("click", () => {

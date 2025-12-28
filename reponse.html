@@ -13,6 +13,8 @@
     <p id="message"></p>
     <a id="btnSuivante" class="btn" href="#" style="display:none;">Étape suivante</a>
     <button id="retourBtn" class="btn" style="display:none;">🔙 Retour à l'étape</button>
+	    <audio id="musique" loop></audio>
+
   </div>
 
   <script src="data.js"></script>
@@ -29,6 +31,8 @@
       const message = document.getElementById("message");
       const btnSuivante = document.getElementById("btnSuivante");
       const retourBtn = document.getElementById("retourBtn");
+	  const musiqueEl = document.getElementById("musique");
+
 
       retourBtn.addEventListener("click", () => {
         window.history.back();
@@ -45,17 +49,20 @@
         if (etape.suivante) {
           etapeMax = etape.suivante;
           localStorage.setItem("etape_max", etapeMax.toString());
-          resultat.innerHtml = "✅ "+etape.message;
+          resultat.innerHTML = "✅ "+etape.message;
           btnSuivante.href = `etape.html?id=${etapeMax}`;
           btnSuivante.style.display = "inline-block";
         } else {
-          resultat.innerHtml = "🎉 Félicitations !";
-          message.innerText = "Tu as terminé le jeu.";
+          resultat.innerHTML = "🎉 "+etape.message;
+		  if(localStorage.getItem("musiqueDemarree") === "true" && etape.music) {
+          musiqueEl.src = "audio/fin.mp3"
+          musiqueEl.play().catch(err => console.log("Lecture musique sur Ã©tape :", err));
+        }
         }
       } else {
         // Mauvaise réponse
         resultat.innerText = "❌ Mauvaise réponse";
-        resultat.innerHtml = "Ce n’est pas le bon QR code pour cette étape.";
+        resultat.innerHTML = "Ce n’est pas le bon QR code pour cette étape.";
         retourBtn.style.display = "inline-block";
       }
     });
